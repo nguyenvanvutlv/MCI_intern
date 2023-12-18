@@ -2,7 +2,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from app.serializers import UserSerializer
+from app.serializers import UserSerializer, ProjectSerializer
+from app.models import CustomUser, Project
+
 
 # Create your views here.
 
@@ -31,6 +33,61 @@ class UserRegister(APIView):
                 {"message": "User created successfully"},
                 status=status.HTTP_201_CREATED,
             )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "User created unsuccessfully"},
+                        status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(["POST"])
+
+class ProjectAPI(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        """
+            Return a list of all projects of user
+        """
+        user = CustomUser.objects.get(username=str(request.user))
+        if user.is_management:
+            projects = Project.objects.filter(manager=user)
+            serializer = ProjectSerializer(projects, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({"message": "You are not management"})
+
+    def post(self, request):
+        user = CustomUser.objects.get(username=str(request.user))
+        if user.is_management:
+            data = request.data
+            data["manager"] = user.id
+            serializer = ProjectSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    {"message": "Project created successfully"},
+                    status=status.HTTP_201_CREATED,
+                )
+            else:
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            return Response({"message": "You are not management"})
+
+    def put(self, request):
+        return Response({"message": "HELLO PUT"})
+        user = CustomUser.objects.get(username=str(request.user))
+        # if user.is_management:
+        #     data = request.data
+        #     project = Project.objects.get(id_project=data["id_project"])
+        #     serializer = ProjectSerializer(project, data=data)
+        #     if serializer.is_valid():
+        #         serializer.save()
+        #         return Response(
+        #             {"message": "Project updated successfully"},
+        #             status=status.HTTP_201_CREATED,
+        #         )
+        #     else:
+        #         return Response(
+        #             serializer.errors,
+        #             status=status.HTTP_400_BAD_REQUEST,
+        #         )
+        # else:
+        #     return Response({"message": "You are not management"})

@@ -1,5 +1,23 @@
 from rest_framework import serializers
-from app.models import CustomUser
+from app.models import CustomUser, Project
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('name_project', 'description_project',
+                  'start_date_project', 'end_date_project', 'manager')
+
+    def create(self, validated_data):
+        project = Project(
+            name_project=validated_data['name_project'],
+            description_project=validated_data['description_project'],
+            start_date_project=validated_data['start_date_project'],
+            end_date_project=validated_data['end_date_project'],
+            manager=validated_data['manager']
+        )
+        project.save()
+        return project
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,7 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
         idm = None
         if validated_data['username_management'] is not None:
             try:
-                idm = CustomUser.objects.get(username=validated_data['username_management'])
                 idm = CustomUser.objects.filter(username=validated_data['username_management'])
                 if idm is not None:
                     idm = idm[0].username
