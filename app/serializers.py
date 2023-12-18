@@ -5,8 +5,7 @@ from app.models import CustomUser, Project
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('name_project', 'description_project',
-                  'start_date_project', 'end_date_project', 'manager')
+        fields = ('id_project', 'name_project', 'description_project', 'start_date_project', 'end_date_project', 'manager')
 
     def create(self, validated_data):
         project = Project(
@@ -18,6 +17,15 @@ class ProjectSerializer(serializers.ModelSerializer):
         )
         project.save()
         return project
+
+    def update(self, instance, validated_data):
+        instance.name_project = validated_data.get('name_project', instance.name_project)
+        instance.description_project = validated_data.get('description_project', instance.description_project)
+        instance.start_date_project = validated_data.get('start_date_project', instance.start_date_project)
+        instance.end_date_project = validated_data.get('end_date_project', instance.end_date_project)
+        instance.manager = validated_data.get('manager', instance.manager)
+        instance.save()
+        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
