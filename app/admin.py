@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import CustomUser, Project, AssignProject, Discuss, Process, Role
+from app.models import CustomUser, Project, AssignProject, Discuss, Process, Role, AssignProjectProcess
 
 
 # Register your models here.
@@ -33,6 +33,12 @@ class AssignProjectAdmin(admin.ModelAdmin):
     ordering = ('user',)
 
 
+class AssignProjectProcessAdmin(admin.ModelAdmin):
+    list_display = ('id_assign', 'id_process', 'is_activate')
+    list_filter = ('id_assign', 'id_process')
+    search_fields = ('id_assign', 'id_process')
+    ordering = ('id_assign',)
+
 class DiscussAdmin(admin.ModelAdmin):
     list_display = ('id_discuss', 'create_date_discuss', 'author')
     search_fields = ('author',)
@@ -50,4 +56,5 @@ admin.site.register(Role, RoleAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Process, ProcessAdmin)
 admin.site.register(AssignProject, AssignProjectAdmin)
+admin.site.register(AssignProjectProcess, AssignProjectProcessAdmin)
 admin.site.register(Discuss, DiscussAdmin)

@@ -85,6 +85,7 @@ class AssignProject(models.Model):
     role_assign = models.ForeignKey(Role, on_delete=models.CASCADE, null=True, blank=True,
                                     verbose_name="ID Role", related_name="id_role_assign")
 
+
     # lưu ý khi mỗi lần thêm mới 1 bản ghi thì kiểm tra xem user đó có đang tham gia vào 1 project nào đó không
     # nếu có thì không cho thêm mới
     # nếu không thì cho thêm mới
@@ -126,6 +127,16 @@ class Process(models.Model):
 
     def __str__(self) -> str:
         return self.name_process
+
+
+class AssignProjectProcess(models.Model):
+    id_assign = models.ForeignKey(AssignProject, on_delete=models.CASCADE, null=True, blank=True,
+                                    verbose_name="ID Assign Project", related_name="id_assign")
+    id_process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True,
+                                    verbose_name="ID Process", related_name="id_process_assign")
+    is_activate = models.BooleanField(default=True)
+    def __str__(self):
+        return f"{self.id_assign} - {self.id_process}"
 
 
 class Discuss(models.Model):
