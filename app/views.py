@@ -270,6 +270,13 @@ class ProcessAPI(APIView):
                 })
                 process_edit_serializer.is_valid(raise_exception=True)
                 process_edit_serializer.save()
+                # add process to AssignProjectProcess
+                assign_project_process_serializer = AssignProjectProcessSerializer(data={
+                    "id_assign": user.id,
+                    "id_process": process_serializer.data["id_process"]
+                })
+                assign_project_process_serializer.is_valid(raise_exception=True)
+                assign_project_process_serializer.save()
 
                 return Response(
                     {"message": "Process created successfully"},
