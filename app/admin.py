@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import CustomUser, Project, AssignProject, Discuss, Process, Role, AssignProjectProcess
+from app.models import *
 
 
 # Register your models here.
@@ -13,17 +13,29 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('id_project', 'name_project', 'manager', 'start_date_project', 'end_date_project', 'status_project')
+    list_display = (
+        'id_project', 'name_project', 'manager', 'start_date_project', 'end_date_project', 'status_project',
+        'is_activate')
     list_filter = ('status_project',)
     search_fields = ('name_project',)
     ordering = ('name_project',)
 
 
 class ProcessAdmin(admin.ModelAdmin):
-    list_display = ('name_process', 'start_date_process', 'end_date_process', 'status_process')
+    list_display = ('id_process', 'name_process', 'start_date_process', 'end_date_process', 'status_process')
     list_filter = ('status_process',)
     search_fields = ('name_process',)
     ordering = ('name_process',)
+
+
+class TaskAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_task', 'name_task', 'description_task', 'create_date_task', 'start_date_task', 'end_date_task',
+        'status_task',
+        'is_activate')
+    list_filter = ('status_task',)
+    search_fields = ('name_task',)
+    ordering = ('name_task',)
 
 
 class AssignProjectAdmin(admin.ModelAdmin):
@@ -39,6 +51,7 @@ class AssignProjectProcessAdmin(admin.ModelAdmin):
     search_fields = ('id_assign', 'id_process')
     ordering = ('id_assign',)
 
+
 class DiscussAdmin(admin.ModelAdmin):
     list_display = ('id_discuss', 'create_date_discuss', 'author')
     search_fields = ('author',)
@@ -46,15 +59,36 @@ class DiscussAdmin(admin.ModelAdmin):
 
 
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ('name_role', 'description_role')
+    list_display = ('name_role', 'description_role', 'author', 'project')
     search_fields = ('name_role',)
     ordering = ('name_role',)
 
 
+class ProjectEditableAdmin(admin.ModelAdmin):
+    list_display = ('id', 'id_user', 'id_project', 'is_activate')
+
+
+class ProcessEditableAdmin(admin.ModelAdmin):
+    list_display = ('id', 'id_user', 'id_process', 'is_activate')
+
+
+class TaskEditableAdmin(admin.ModelAdmin):
+    list_display = ('id', 'id_user', 'id_task', 'is_activate')
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Role, RoleAdmin)
+
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(ProjectEditable, ProjectEditableAdmin)
+
 admin.site.register(Process, ProcessAdmin)
+admin.site.register(ProcessEditable, ProcessEditableAdmin)
+
+admin.site.register(Task, TaskAdmin)
+admin.site.register(TaskEditable, TaskEditableAdmin)
+
+
 admin.site.register(AssignProject, AssignProjectAdmin)
 admin.site.register(AssignProjectProcess, AssignProjectProcessAdmin)
 admin.site.register(Discuss, DiscussAdmin)

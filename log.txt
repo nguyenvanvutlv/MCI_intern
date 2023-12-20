@@ -1,13 +1,6 @@
-project:
-    create: manager create project        Done
-            method: post
-    edit: manager edit project            Done
-            method: put
-    delete: manager delete project        50% [exits is_activate project]
-            method: delete
-    view: manager view project            Done
-            method: get
+Đã làm được
+ các api nh ư yêu ầu
 
-- edit database: user assign each process
+Chưa làm được
 
-- another manager can edit project [fixed]
+
