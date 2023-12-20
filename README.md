@@ -45,24 +45,6 @@ python manage.py runserver
 
 
 
-# MODEL
+# API DOCUMENT
 
-## 1. ROLE
-
-Các vai trò mẫu có thể có trong công ty
-
-```txt
-Developer (Dev) : Nhân viên phát triển
-Tester (QC: Quality Control) – Nhân viên kiểm thử
-Business Analysis (BA) : Nhân viên phân tích
-Support Analysis (SPA) : Nhân viên hỗ trợ
-Quality assurance (QA) : Nhân viên đảm bảo chất lượng
-Technical Architect (TA) : Kiến trúc sư
-Project Manager (PM) : Quản lý dự án
-```
-
-Người dùng có thể thêm các vai trò khác vào hệ thống, 
-nhưng các vai trò này là bắt buộc phải có trong hệ thống,
-và không thể xóa các vai trò này khỏi hệ thống.
-
-Các vai trò thêm mới chỉ hiển thị trong dự án của người dùng thêm mới.
+![API](https://www.postman.com/satellite-specialist-59600610/workspace/pat/collection/19512792-1f5c60ad-07e9-4e30-9009-032ae553cf01?action=share&creator=19512792&active-environment=19512792-3c741fb4-6770-48fe-b30c-ec08c11b16e2)
